@@ -1,13 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking de Jogadores</title>
+    <title>Aim Trainer - Ranking Global</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
 <body>
-    
+    <div class="container">
+        
+        <section id="tela-inicio" class="tela ativa">
+            <div class="card">
+                <h1>Aim Trainer</h1>
+                <p>Teste seus reflexos e conquiste o Top 10 global.</p>
+                <form id="form-inicio">
+                    <div class="input-group">
+                        <input type="text" id="nome-jogador" required autocomplete="off" placeholder=" ">
+                        <label for="nome-jogador">Digite seu Nickname</label>
+                    </div>
+                    <button type="submit" class="btn-primario">Entrar na Arena</button>
+                </form>
+                <button id="btn-ver-ranking-inicio" class="btn-secundario mt-3">Ver Ranking Atual</button>
+            </div>
+        </section>
+
+        <section id="tela-jogo" class="tela oculta">
+            <header class="header-jogo">
+                <div class="status-box">
+                    <span>Jogador:</span>
+                    <strong id="display-nome">---</strong>
+                </div>
+                <div class="status-box destaque">
+                    <span>Tempo:</span>
+                    <strong id="tempo-restante">10s</strong>
+                </div>
+                <div class="status-box">
+                    <span>Pontos:</span>
+                    <strong id="pontos-atuais">0</strong>
+                </div>
+            </header>
+            <div id="arena">
+                <button id="alvo"></button>
+            </div>
+        </section>
+
+        <section id="tela-ranking" class="tela oculta">
+            <div class="card card-largo">
+                <h2>🏆 Top 10</h2>
+                <div class="tabela-container">
+                    <table id="tabela-ranking">
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>Jogador</th>
+                                <th>Pontuação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpo-tabela">
+                            </tbody>
+                    </table>
+                </div>
+                <div class="botoes-ranking">
+                    <button id="btn-jogar-novamente" class="btn-primario">Jogar Novamente</button>
+                    <button id="btn-trocar-jogador" class="btn-secundario">Trocar de Jogador</button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="MinHeap.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

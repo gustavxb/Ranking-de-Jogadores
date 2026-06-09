@@ -1,1 +1,258 @@
+:root {
+    --bg-fundo: #0f1115;
+    --bg-card: #1a1d24;
+    --bg-input: #232730;
+    --cor-texto: #e2e8f0;
+    --cor-texto-mutado: #94a3b8;
+    --cor-primaria: #00e5ff;
+    --cor-primaria-hover: #00b4d8;
+    --cor-alvo: #ff2a5f;
+    --borda: rgba(255, 255, 255, 0.1);
+}
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Inter, sans-serif;
+}
+
+body {
+    background-color: var(--bg-fundo);
+    color: var(--cor-texto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+/* Controle de Telas (SPA) */
+.tela {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.tela.ativa {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards Modernos */
+.card {
+    background-color: var(--bg-card);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--borda);
+    text-align: center;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.card-largo {
+    max-width: 700px;
+}
+
+h1, h2 {
+    color: var(--cor-primaria);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+p {
+    color: var(--cor-texto-mutado);
+    margin-bottom: 30px;
+}
+
+/* Inputs Animados */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--bg-input);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: var(--cor-texto);
+    font-size: 1rem;
+    transition: 0.3s;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.input-group label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cor-texto-mutado);
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+/* Faz o label subir quando o input está focado ou preenchido */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 0.8rem;
+    background-color: var(--bg-card);
+    padding: 0 5px;
+    color: var(--cor-primaria);
+}
+
+/* Botões */
+button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+}
+
+.btn-primario {
+    background-color: var(--cor-primaria);
+    color: #000;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+}
+
+.btn-primario:hover {
+    background-color: var(--cor-primaria-hover);
+    transform: translateY(-2px);
+}
+
+.btn-secundario {
+    background-color: transparent;
+    color: var(--cor-texto-mutado);
+    border: 1px solid var(--cor-texto-mutado);
+}
+
+.btn-secundario:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--cor-texto);
+}
+
+.mt-3 {
+    margin-top: 15px;
+}
+
+/* --- TELA 2: ARENA DO JOGO --- */
+.header-jogo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: var(--bg-card);
+    padding: 15px 25px;
+    border-radius: 12px;
+    border: 1px solid var(--borda);
+}
+
+.status-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.status-box span {
+    font-size: 0.8rem;
+    color: var(--cor-texto-mutado);
+    text-transform: uppercase;
+}
+
+.status-box strong {
+    font-size: 1.4rem;
+    font-family: monospace;
+}
+
+.status-box.destaque strong {
+    color: var(--cor-primaria);
+}
+
+#arena {
+    width: 100%;
+    height: 60vh;
+    background-color: #0a0b0e;
+    border-radius: 12px;
+    border: 1px solid var(--borda);
+    position: relative;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+#alvo {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background-color: var(--cor-alvo);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 15px rgba(255, 42, 95, 0.6);
+    transition: transform 0.05s;
+}
+
+#alvo:active {
+    transform: translate(-50%, -50%) scale(0.7);
+    background-color: #d11f4d;
+}
+
+/* --- TELA 3: RANKING --- */
+.tabela-container {
+    background-color: var(--bg-input);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--bg-card);
+}
+
+th {
+    color: var(--cor-texto-mutado);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.botoes-ranking {
+    display: flex;
+    gap: 15px;
+}
+
+/* Cores das Medalhas */
+.pos-1 { color: #FFD700; font-weight: bold; font-size: 1.1rem; }
+.pos-2 { color: #C0C0C0; font-weight: bold; font-size: 1.1rem; }
+.pos-3 { color: #CD7F32; font-weight: bold; font-size: 1.1rem; }
