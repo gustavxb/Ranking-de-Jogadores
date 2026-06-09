@@ -1,4 +1,4 @@
-# Projeto 7 — Ranking de Jogadores
+# Ranking de Jogadores
 
 Este repositório contém o código-fonte e a documentação referente ao Projeto 7, que consiste no desenvolvimento de um sistema de gerenciamento de ranking operando em tempo real. O foco principal desta aplicação é processar, organizar e exibir as pontuações de múltiplos usuários de maneira contínua, simulando um ambiente competitivo onde a performance do algoritmo é tão importante quanto o resultado que ele exibe.
 
