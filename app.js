@@ -1,3 +1,4 @@
+let rankingOrdenado = [];
 const rankingHeap = new MinHeap();
 
 // --- MAPEAMENTO DE TELAS ---
@@ -40,9 +41,12 @@ function mostrarTela(tela) {
 // --- INICIALIZAÇÃO E PERSISTÊNCIA ---
 function inicializarSistema() {
     const dadosSalvos = localStorage.getItem('rankingDadosAim');
+
     if (dadosSalvos) {
         rankingHeap.carregarEstado(JSON.parse(dadosSalvos));
     }
+
+    atualizarRankingOrdenado();
 }
 
 function salvarEstado() {
@@ -57,12 +61,19 @@ formInicio.addEventListener('submit', function(e) {
 });
 
 btnVerRankingInicio.addEventListener('click', function() {
+    atualizarRankingOrdenado();
     atualizarTabelaVisual();
     mostrarTela(telaRanking);
 });
 
 // --- LÓGICA DO JOGO ---
 function iniciarJogo() {
+
+    if (!jogadorAtual || jogadorAtual.trim() === "") {
+        mostrarTela(telaInicio);
+        return;
+    }
+
     mostrarTela(telaJogo);
     
     // Reseta estado
@@ -104,15 +115,35 @@ function moverAlvo() {
     alvo.style.top = `${novaPosY}px`;
 }
 
+function atualizarRankingOrdenado() {
+    rankingOrdenado = rankingHeap.obterListaOrdenadaDecrescente();
+}
+
 function finalizarJogo() {
     clearInterval(temporizador);
-    
-    // Insere na Heap a pontuação final
-    rankingHeap.inserir({
-        nome: jogadorAtual,
-        pontuacao: pontuacaoAtual
-    });
 
+    const jogadorExistente = rankingHeap.heap.find(
+        jogador => jogador.nome.toLowerCase() === jogadorAtual.toLowerCase()
+    );
+
+    if (jogadorExistente) {
+
+        if (pontuacaoAtual > jogadorExistente.pontuacao) {
+            jogadorExistente.pontuacao = pontuacaoAtual;
+
+            rankingHeap.heap.sort((a, b) => a.pontuacao - b.pontuacao);
+        }
+
+    } else {
+
+        rankingHeap.inserir({
+            nome: jogadorAtual,
+            pontuacao: pontuacaoAtual
+        });
+
+    }
+
+    atualizarRankingOrdenado();
     salvarEstado();
     atualizarTabelaVisual();
     mostrarTela(telaRanking);
@@ -121,7 +152,7 @@ function finalizarJogo() {
 // --- LÓGICA DO RANKING ---
 function atualizarTabelaVisual() {
     corpoTabela.innerHTML = '';
-    const listaTop10 = rankingHeap.obterListaOrdenadaDecrescente();
+    const listaTop10 = rankingOrdenado;
 
     if (listaTop10.length === 0) {
         corpoTabela.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--cor-texto-mutado);">Ainda não há registros. Seja o primeiro!</td></tr>';
@@ -147,9 +178,18 @@ function atualizarTabelaVisual() {
 }
 
 // Botoes da Tela de Ranking
-btnJogarNovamente.addEventListener('click', iniciarJogo);
+btnJogarNovamente.addEventListener('click', function() {
+
+    if (!jogadorAtual || jogadorAtual.trim() === "") {
+        mostrarTela(telaInicio);
+        return;
+    }
+
+    iniciarJogo();
+});
 
 btnTrocarJogador.addEventListener('click', function() {
+    jogadorAtual = "";
     inputNome.value = "";
     mostrarTela(telaInicio);
 });
